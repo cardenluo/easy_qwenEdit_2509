@@ -195,7 +195,14 @@ class Easy_QwenEdit2509:
         return c
 
 
+NODE_CLASS_MAPPINGS = {
+    "Easy_QwenEdit2509": Easy_QwenEdit2509,
 
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "Easy_QwenEdit2509": Easy_QwenEdit2509,
+}
 
 
 
