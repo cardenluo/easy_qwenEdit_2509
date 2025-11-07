@@ -1,9 +1,16 @@
-# Easy Qwen Image Edit Plugin for ComfyUI
+# easy_Qwen_Image_Edit
 
 ## 插件介绍
 
-这个修改了官方的尺寸限制，同时做了尺寸一致性处理，可以最大程度减少偏移问题。
-如果，尺寸前处理规范，可以很容易实现零偏移
+这个节点修改了官方的尺寸限制，同时做了尺寸一致性处理，可以最大程度减少偏移问题。如果尺寸前处理规范，比如8的倍数，可以很容易实现零偏移。
+
+是https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的同款，非管线版本
+<img width="416" height="536" alt="image" src="https://github.com/user-attachments/assets/03b45371-7af8-4d68-b493-83743123fa07" />
+
+演示：附件有工作流
+<img width="1394" height="720" alt="image" src="https://github.com/user-attachments/assets/2aa7fdb7-c596-46c0-8d3c-8747cd74cccc" />
+
+
 
 ## 安装方法
 
