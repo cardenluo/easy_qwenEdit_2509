@@ -2,9 +2,9 @@
 
 ## 插件介绍
 
-修改了官方的尺寸限制，同时做了尺寸一致性处理，可以最大程度减少偏移问题。如果尺寸前处理规范，可以很容易实现零偏移。
+修改了官方的尺寸限制，同时做了尺寸一致性处理，可以最大程度减少偏移问题。如果尺寸前处理规范，可以很容易实现零偏移, 
 
-是https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的"总控_QwenEditplus堆"同款，非管线版本，同样带了遮罩功能
+https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的"总控_QwenEditplus堆"在B站做很多无偏移的案例， 此为相同原理的非管线版本
 
 
 <img width="2457" height="1296" alt="image" src="https://github.com/user-attachments/assets/dec6cd9e-6814-43db-bdbf-54175c81ee03" />
