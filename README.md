@@ -4,8 +4,7 @@
 
 这个节点修改了官方的尺寸限制，同时做了尺寸一致性处理，可以最大程度减少偏移问题。如果尺寸前处理规范，比如8的倍数，可以很容易实现零偏移。
 
-是https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的同款，非管线版本，同样带了遮罩功能
-<img width="416" height="536" alt="image" src="https://github.com/user-attachments/assets/03b45371-7af8-4d68-b493-83743123fa07" />
+是https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的"总控_QwenEditplus堆"同款，非管线版本，同样带了遮罩功能
 
 <img width="599" height="648" alt="image" src="https://github.com/user-attachments/assets/15bb70f9-c4d2-4f44-b8d5-ff224ae6b3e8" />
 
