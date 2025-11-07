@@ -1,4 +1,4 @@
-# easy_Qwen_Image_Edit
+
 
 ## 插件介绍
 
