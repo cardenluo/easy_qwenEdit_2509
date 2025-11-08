@@ -28,7 +28,7 @@ class Easy_QwenEdit2509:
                 "prompt": ("STRING", {"multiline": True, "default": ""}),
                 "latent_image": ("IMAGE", ),
                 "latent_mask": ("MASK", ),
-                "system_prompt": ("STRING", {"multiline": True, "default": "Describe the key features of the input image (color, shape, size, texture, objects, background), then explain how the user's text instruction should alter or modify the image. Generate a new image that meets the user's requirements while maintaining consistency with the original input where appropriate."}),
+                "system_prompt": ("STRING", {"multiline": False, "default": "Describe the key features of the input image (color, shape, size, texture, objects, background), then explain how the user's text instruction should alter or modify the image. Generate a new image that meets the user's requirements while maintaining consistency with the original input where appropriate."}),
             }
         }
     
@@ -214,4 +214,5 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Easy_QwenEdit2509": "Easy_QwenEdit2509",
 }
+
 
