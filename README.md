@@ -1,4 +1,3 @@
-<img width="1320" height="697" alt="image" src="https://github.com/user-attachments/assets/78ef309e-8a28-4859-86fb-2d226cceb941" />
 
 ## 插件介绍
 
