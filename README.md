@@ -20,6 +20,8 @@ auto resize 缩放模式（crop=中心裁剪，pad=中心黑色填充，stretch=
 
 <img width="1911" height="1145" alt="image" src="https://github.com/user-attachments/assets/ec5e4280-0244-493f-8229-f345f47ca03c" />
 
+<img width="2914" height="1160" alt="image" src="https://github.com/user-attachments/assets/ca04ee3f-5b0f-4ea7-9518-2bc9425dbc71" />
+
 
 **可选参数：**
 - `image1`: 第一张参考图像
