@@ -16,7 +16,7 @@ https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的"总控_QwenEditplus堆
 
 更新：3种可选自动统一尺寸的方式
 
-缩放模式（crop=中心裁剪，pad=中心黑色填充，stretch=强制拉伸）
+auto resize 缩放模式（crop=中心裁剪，pad=中心黑色填充，stretch=强制拉伸）
 
 <img width="1911" height="1145" alt="image" src="https://github.com/user-attachments/assets/ec5e4280-0244-493f-8229-f345f47ca03c" />
 
