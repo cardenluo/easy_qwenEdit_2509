@@ -66,7 +66,11 @@ class Easy_QwenEdit2509:
 
     def QWENencode(self, prompt="", image1=None, image2=None, image3=None, vae=None, clip=None, vl_size=384, latent_image=None, latent_mask=None, system_prompt=""):
         auto_resize = True
-        # 通道预处理：去除Alpha通道，统一RGB格式
+
+        if latent_image is None:
+            raise ValueError("latent_image Must be input to determine the size of the generated image；latent_image 必须输入以确定生成图像的尺寸")
+        
+
         image1 = self._process_image_channels(image1)
         image2 = self._process_image_channels(image2)
         image3 = self._process_image_channels(image3)
@@ -167,13 +171,31 @@ class Easy_QwenEdit2509:
         return (out[0], out[1], out_latent)
 
     def auto_resize(self, image, get_image_size):
+        """中心裁切实现：将输入图像裁切为目标尺寸（get_image_size的尺寸），保持中心区域"""
+        # 确保输入为4维张量（batch, channel, height, width）
         if len(image.shape) == 3:
             image = image.unsqueeze(0)
-        _, _, height_max, width_max = get_image_size.shape
-        outimage = comfy.utils.common_upscale(image, width_max, height_max, "bicubic", "center")
-        width = max(64, (outimage.shape[3] // 8) * 8)
-        height = max(64, (outimage.shape[2] // 8) * 8)
-        return comfy.utils.common_upscale(outimage, width, height, "bicubic", "center")
+        _, _, img_h, img_w = image.shape
+        _, _, target_h, target_w = get_image_size.shape
+
+        # 计算裁切偏移量：确保从中心开始裁切
+        x_offset = max(0, (img_w - target_w) // 2)
+        y_offset = max(0, (img_h - target_h) // 2)
+
+        # 执行中心裁切
+        cropped_img = image[:, :, y_offset:y_offset+target_h, x_offset:x_offset+target_w]
+
+        # 确保输出尺寸为8的整数倍（适配VAE编码要求）
+        final_w = max(64, (cropped_img.shape[3] // 8) * 8)
+        final_h = max(64, (cropped_img.shape[2] // 8) * 8)
+
+        # 若裁切后尺寸仍不满足8的倍数，微调至最近的8倍整数（仅缩小，不拉伸）
+        if final_w != cropped_img.shape[3] or final_h != cropped_img.shape[2]:
+            x微调_offset = (cropped_img.shape[3] - final_w) // 2
+            y微调_offset = (cropped_img.shape[2] - final_h) // 2
+            cropped_img = cropped_img[:, :, y微调_offset:y微调_offset+final_h, x微调_offset:x微调_offset+final_w]
+
+        return cropped_img
 
     def zero_out(self, conditioning):
         c = []
@@ -204,9 +226,6 @@ class Easy_QwenEdit2509:
             instruction_content = instruction
         return template_prefix + instruction_content + template_suffix
 
-
-
-
 NODE_CLASS_MAPPINGS = {
     "Easy_QwenEdit2509": Easy_QwenEdit2509,
 }
@@ -214,5 +233,18 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Easy_QwenEdit2509": "Easy_QwenEdit2509",
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
