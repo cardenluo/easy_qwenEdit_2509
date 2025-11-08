@@ -1,4 +1,4 @@
-
+<img width="1320" height="697" alt="image" src="https://github.com/user-attachments/assets/78ef309e-8a28-4859-86fb-2d226cceb941" />
 
 ## 插件介绍
 
@@ -10,8 +10,8 @@ https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的"总控_QwenEditplus堆
 <img width="2457" height="1296" alt="image" src="https://github.com/user-attachments/assets/dec6cd9e-6814-43db-bdbf-54175c81ee03" />
 
 演示：附件有工作流
-<img width="1394" height="720" alt="image" src="https://github.com/user-attachments/assets/2aa7fdb7-c596-46c0-8d3c-8747cd74cccc" />
 
+<img width="1320" height="697" alt="image" src="https://github.com/user-attachments/assets/7c86a5ba-7470-4bc9-85c3-b826dfc46eb2" />
 
 
 
