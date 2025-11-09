@@ -1,3 +1,4 @@
+
 import node_helpers
 import comfy.utils
 import math
@@ -9,6 +10,9 @@ import os
 import copy
 import folder_paths
 import hashlib
+
+
+
 
 class Easy_QwenEdit2509:
     @classmethod
@@ -72,19 +76,28 @@ class Easy_QwenEdit2509:
     def _auto_resize(self, image: torch.Tensor, target_h: int, target_w: int, auto_resize: str) -> torch.Tensor:
         batch, ch, orig_h, orig_w = image.shape
         
-        target_h = max(target_h, 64)
-        target_w = max(target_w, 64)
-        orig_h = max(orig_h, 64)
-        orig_w = max(orig_w, 64)
+        # 强制最小尺寸≥32（适配VAE 3×3卷积核）
+        target_h = max(target_h, 32)
+        target_w = max(target_w, 32)
+        orig_h = max(orig_h, 32)
+        orig_w = max(orig_w, 32)
         
         if auto_resize == "crop":
             scale = max(target_w / orig_w, target_h / orig_h)
             new_w = int(orig_w * scale)
             new_h = int(orig_h * scale)
+            # 强制新尺寸≥目标尺寸，避免裁剪后不足
+            new_w = max(new_w, target_w)
+            new_h = max(new_h, target_h)
             scaled = comfy.utils.common_upscale(image, new_w, new_h, "bicubic", "disabled")
             x_offset = (new_w - target_w) // 2
             y_offset = (new_h - target_h) // 2
-            result = scaled[:, :, y_offset:y_offset + target_h, x_offset:x_offset + target_w]
+            # 裁剪后强制宽高≥32，避免过小
+            crop_h = min(target_h, new_h - y_offset)
+            crop_w = min(target_w, new_w - x_offset)
+            crop_h = max(crop_h, 32)
+            crop_w = max(crop_w, 32)
+            result = scaled[:, :, y_offset:y_offset + crop_h, x_offset:x_offset + crop_w]
             
         elif auto_resize == "pad":
             scale = min(target_w / orig_w, target_h / orig_h)
@@ -109,8 +122,9 @@ class Easy_QwenEdit2509:
             y_offset = (new_h - target_h) // 2
             result = scaled[:, :, y_offset:y_offset + target_h, x_offset:x_offset + target_w]
         
-        final_w = max(64, (result.shape[3] // 8) * 8)
-        final_h = max(64, (result.shape[2] // 8) * 8)
+        # 最终尺寸确保是8的倍数且≥32
+        final_w = max(32, (result.shape[3] // 8) * 8)
+        final_h = max(32, (result.shape[2] // 8) * 8)
         
         if final_w != result.shape[3] or final_h != result.shape[2]:
             x_offset = (result.shape[3] - final_w) // 2
@@ -159,8 +173,17 @@ class Easy_QwenEdit2509:
         for i, image in enumerate(orig_images):
             if image is not None and vae is not None:
                 samples = image.movedim(-1, 1)
-                width, height = samples.shape[3], samples.shape[2]
-                scaled_img = comfy.utils.common_upscale(samples, width, height, "area", "disabled")
+                # 强制尺寸≥32，避免VAE卷积报错
+                orig_sample_h = max(samples.shape[2], 32)
+                orig_sample_w = max(samples.shape[3], 32)
+                if samples.shape[2] != orig_sample_h or samples.shape[3] != orig_sample_w:
+                    samples = comfy.utils.common_upscale(samples, orig_sample_w, orig_sample_h, "bicubic", "disabled")
+                # 计算8的倍数尺寸，仍强制≥32
+                width = (orig_sample_w // 8) * 8
+                height = (orig_sample_h // 8) * 8
+                width = max(width, 32)
+                height = max(height, 32)
+                scaled_img = comfy.utils.common_upscale(samples, width, height, "bicubic", "disabled")
                 ref_latents.append(vae.encode(scaled_img.movedim(1, -1)[:, :, :, :3]))
 
         tokens = clip.tokenize(image_prompt + prompt, images=images_vl, llama_template=llama_template)
@@ -239,15 +262,6 @@ class Easy_QwenEdit2509:
                 instruction = instruction.replace("{}", "")
             instruction_content = instruction
         return template_prefix + instruction_content + template_suffix
-
-NODE_CLASS_MAPPINGS = {
-    "Easy_QwenEdit2509": Easy_QwenEdit2509,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "Easy_QwenEdit2509": "Easy_QwenEdit2509",
-}
-
 
 
 
