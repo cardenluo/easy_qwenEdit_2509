@@ -263,5 +263,16 @@ class Easy_QwenEdit2509:
             instruction_content = instruction
         return template_prefix + instruction_content + template_suffix
 
+NODE_CLASS_MAPPINGS = {
+    "Easy_QwenEdit2509": Easy_QwenEdit2509,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "Easy_QwenEdit2509": "Easy_QwenEdit2509",
+}
+
+
+
+
 
 
