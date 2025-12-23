@@ -14,6 +14,7 @@ https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的"总控_QwenEditplus堆
 
 
 当参考图和生成图尺寸一致，不用拉伸，也不用填充，信息就能全部参考，效果是最佳的。
+
 当参考图和生成图尺寸不一致时，尺寸统一有3种选择方式，按照生成需要进行选择：
 
 auto resize 缩放模式（crop=中心裁剪，pad=中心黑色填充，stretch=强制拉伸）
