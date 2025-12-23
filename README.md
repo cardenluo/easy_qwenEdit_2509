@@ -13,7 +13,8 @@ https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的"总控_QwenEditplus堆
 <img width="1320" height="697" alt="image" src="https://github.com/user-attachments/assets/7c86a5ba-7470-4bc9-85c3-b826dfc46eb2" />
 
 
-更新：3种可选自动统一尺寸的方式
+当参考图和生成图尺寸一致，不用拉伸，也不用填充，信息就能全部参考，效果是最佳的。
+当参考图和生成图尺寸不一致时，尺寸统一有3种选择方式，按照生成需要进行选择：
 
 auto resize 缩放模式（crop=中心裁剪，pad=中心黑色填充，stretch=强制拉伸）
 
