@@ -6,7 +6,9 @@
 https://github.com/cardenluo/ComfyUI-Apt_Preset 插件的"总控_QwenEditplus堆"在B站做很多无偏移的案例， 此为相同原理的非管线版本
 
 
-<img width="2457" height="1296" alt="image" src="https://github.com/user-attachments/assets/dec6cd9e-6814-43db-bdbf-54175c81ee03" />
+<img width="2457" height="1296" alt="11" src="https://github.com/user-attachments/assets/1a3e9c2c-160f-476c-a3db-867841cb7927" />
+
+
 
 演示：附件有工作流
 
