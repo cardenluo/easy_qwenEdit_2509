@@ -14,6 +14,7 @@ import hashlib
 
 
 
+
 class Easy_QwenEdit2509:
     @classmethod
     def INPUT_TYPES(s):
@@ -33,6 +34,9 @@ class Easy_QwenEdit2509:
                 "latent_mask": ("MASK", ),
 
                 "system_prompt": ("STRING", {"multiline": False, "default": "Describe the key features of the input image (color, shape, size, texture, objects, background), then explain how the user's text instruction should alter or modify the image. Generate a new image that meets the user's requirements while maintaining consistency with the original input where appropriate."}),
+                "image1_strength": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 10.0, "step": 0.01}),
+                "image2_strength": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 10.0, "step": 0.01}),
+                "image3_strength": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 10.0, "step": 0.01}),
             }
         }
     
@@ -134,7 +138,8 @@ class Easy_QwenEdit2509:
         return result
 
     def QWENencode(self, prompt="", image1=None, image2=None, image3=None, vae=None, clip=None, vl_size=384, 
-                   latent_image=None, latent_mask=None, system_prompt="", auto_resize="crop"):
+                   latent_image=None, latent_mask=None, system_prompt="", auto_resize="crop",
+                   image1_strength=1.0, image2_strength=1.0, image3_strength=1.0):
         
         if latent_image is None:
             raise ValueError("latent_image Must be input to determine the size of the generated image；latent_image 必须输入以确定生成图像的尺寸")
@@ -143,6 +148,7 @@ class Easy_QwenEdit2509:
         image2 = self._process_image_channels(image2)
         image3 = self._process_image_channels(image3)
         orig_images = [image1, image2, image3]
+        strengths = [image1_strength, image2_strength, image3_strength]
         images_vl = []
         llama_template = self.get_system_prompt(system_prompt)
         image_prompt = ""
@@ -184,7 +190,12 @@ class Easy_QwenEdit2509:
                 width = max(width, 32)
                 height = max(height, 32)
                 scaled_img = comfy.utils.common_upscale(samples, width, height, "bicubic", "disabled")
-                ref_latents.append(vae.encode(scaled_img.movedim(1, -1)[:, :, :, :3]))
+                # 编码潜变量并应用对应的权重
+                latent = vae.encode(scaled_img.movedim(1, -1)[:, :, :, :3])
+                if i < len(strengths):
+                    # 应用权重到潜变量
+                    latent = latent * strengths[i]
+                ref_latents.append(latent)
 
         tokens = clip.tokenize(image_prompt + prompt, images=images_vl, llama_template=llama_template)
         conditioning = clip.encode_from_tokens_scheduled(tokens)
@@ -263,6 +274,9 @@ class Easy_QwenEdit2509:
             instruction_content = instruction
         return template_prefix + instruction_content + template_suffix
 
+
+
+
 NODE_CLASS_MAPPINGS = {
     "Easy_QwenEdit2509": Easy_QwenEdit2509,
 }
@@ -270,6 +284,7 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Easy_QwenEdit2509": "Easy_QwenEdit2509",
 }
+
 
 
 
